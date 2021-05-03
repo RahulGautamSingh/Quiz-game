@@ -28,22 +28,20 @@ function Page(props) {
     if (currentIndex < questionObj.length - 1) {
       setTimeout(() => setCurrentIndex(currentIndex + 1), 2000);
       if (questionObj[currentIndex].correctOption === index) {
-        
-          setScore(score + 1);
-          return "green";
-        
+        setScore(score + 1);
+        return "green";
       } else {
         return "red";
       }
-    } else {
+    } 
+    
+    else {
       setTimeout(
-        () => history.push({ pathname: "/result", state: { userData } }),
+        () => history.push({ pathname: "/result", state: { userDataCopy } }),
         2000
       );
       if (questionObj[currentIndex].correctOption === index) {
-        
-          return "green";
-        
+        return "green";
       } else {
         return "red";
       }
