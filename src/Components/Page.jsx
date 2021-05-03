@@ -1,6 +1,6 @@
 import Question from "./Question";
 import Option from "./Option";
-import { useState } from "react";
+import {useState } from "react";
 import { useHistory } from "react-router-dom";
 
 function Page(props) {
@@ -9,8 +9,8 @@ function Page(props) {
   const history = useHistory();
 
   let [userData, setUserData] = useState([]);
-  let userDataCopy;
 
+let userDataCopy;
   function checkAns(index) {
     userDataCopy = JSON.parse(JSON.stringify(userData));
 
@@ -23,10 +23,11 @@ function Page(props) {
       ],
       questionObj[currentIndex].answers[index],
     ]);
-    setUserData(userDataCopy);
-
+   
+   setUserData(userDataCopy)
+console.log(userData)
     if (currentIndex < questionObj.length - 1) {
-      setTimeout(() => setCurrentIndex(currentIndex + 1), 2000);
+      setTimeout(() => setCurrentIndex(currentIndex + 1), 500);
       if (questionObj[currentIndex].correctOption === index) {
         setScore(score + 1);
         return "green";
@@ -41,13 +42,14 @@ function Page(props) {
         2000
       );
       if (questionObj[currentIndex].correctOption === index) {
+        setScore(score + 1);
         return "green";
       } else {
         return "red";
       }
     }
   }
-
+  // useEffect(() => { setUserData(userDataCopy) },[userDataCopy])
   let questionObj = [
     {
       question: "Who is the Prime Minister of 1?",

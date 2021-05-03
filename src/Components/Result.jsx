@@ -3,7 +3,8 @@ import { useHistory } from "react-router-dom";
 export default function Result(props) {
   const hero = useHistory();
   const mypara = hero.location.state;
-  let data = mypara.userData;
+  let data = mypara.userDataCopy;
+  // console.log(mypara)
   return (
     <div className="result-container">
       <h1>Results</h1>
