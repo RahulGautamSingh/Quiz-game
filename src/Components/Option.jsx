@@ -5,6 +5,7 @@ import Confetti from "react-dom-confetti";
 export default function Option(props) {
   let [bgColor, setBgColor] = useState("transparent");
   let [selected, setSelected] = useState(false);
+
   return (
     <>
       <button

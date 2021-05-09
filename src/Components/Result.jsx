@@ -14,18 +14,21 @@ export default function Result(props) {
           <th>Correct Answer</th>
           <th>Your Answer</th>
         </tr>
-    {
-      data.map(elem=>{
-        return (
-          <tr>
-            <td>{elem[0]}</td>
-            <td>{elem[3]}</td>
-            <td style={{backgroundColor : elem[1]===elem[2]?"green":"red"}}>{elem[4]}</td>
+        {data.map((elem) => {
+          return (
+            <tr>
+              <td>{elem[0]}</td>
+              <td>{elem[3]}</td>
+              <td
+                style={{
+                  backgroundColor: elem[2] ===null ? "transparent":elem[1]===elem[2]?"green" : "red",
+                }}
+              >
+                {elem[4]}
+              </td>
             </tr>
-         
-        )
-      })
-    }
+          );
+        })}
       </table>
     </div>
   );

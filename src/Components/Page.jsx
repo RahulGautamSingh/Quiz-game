@@ -1,16 +1,17 @@
 import Question from "./Question";
 import Option from "./Option";
-import {useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 function Page(props) {
   let [score, setScore] = useState(0);
   let [currentIndex, setCurrentIndex] = useState(0);
+  let [widthe, setWidthe] = useState(100);
   const history = useHistory();
 
   let [userData, setUserData] = useState([]);
+  let userDataCopy;
 
-let userDataCopy;
   function checkAns(index) {
     userDataCopy = JSON.parse(JSON.stringify(userData));
 
@@ -23,10 +24,12 @@ let userDataCopy;
       ],
       questionObj[currentIndex].answers[index],
     ]);
+
+    setUserData(userDataCopy);
+    // console.log(userData)
    
-   setUserData(userDataCopy)
-console.log(userData)
     if (currentIndex < questionObj.length - 1) {
+      setTimeout(() => setWidthe(100), 500);
       setTimeout(() => setCurrentIndex(currentIndex + 1), 500);
       if (questionObj[currentIndex].correctOption === index) {
         setScore(score + 1);
@@ -34,12 +37,11 @@ console.log(userData)
       } else {
         return "red";
       }
-    } 
-    
-    else {
+    } else {
+      setTimeout(() => setWidthe(100), 500);
       setTimeout(
         () => history.push({ pathname: "/result", state: { userDataCopy } }),
-        2000
+        500
       );
       if (questionObj[currentIndex].correctOption === index) {
         setScore(score + 1);
@@ -49,7 +51,7 @@ console.log(userData)
       }
     }
   }
-  // useEffect(() => { setUserData(userDataCopy) },[userDataCopy])
+
   let questionObj = [
     {
       question: "Who is the Prime Minister of 1?",
@@ -104,27 +106,74 @@ console.log(userData)
     },
   ];
 
+  useEffect(
+    () => {
+      // {   if(currentIndex===questionObj.length-2){
+      //   setTimeout(
+      //     () => history.push({ pathname: "/result", state: { userDataCopy } }),
+      //     2000
+      //   );}
+
+     
+      if (widthe === 0) {
+        userDataCopy = JSON.parse(JSON.stringify(userData));
+
+        userDataCopy.push([
+          questionObj[currentIndex].question,
+          questionObj[currentIndex].correctOption,
+          null,
+          questionObj[currentIndex].answers[
+            questionObj[currentIndex].correctOption
+          ],
+          "not answered",
+        ]);
+  
+        setUserData(userDataCopy);
+        if (currentIndex === 4) {
+          setTimeout(
+            () => history.push({ pathname: "/result", state: { userDataCopy } }),
+            2000
+          );
+        } else {
+          setCurrentIndex(currentIndex + 1);
+          console.log("after" + currentIndex);
+
+          setWidthe(100);
+          return;
+        }
+      }
+      let timerInterval = setInterval(() => setWidthe(widthe - 1), 40);
+      return () => clearInterval(timerInterval);
+    },
+
+    // eslint-disable-next-line
+    [widthe]
+  );
+
   return (
-    <>
-      <div className="container">
-        <div className="score">Score : {score}</div>
+    currentIndex >= 0 && (
+      <>
+        <div className="container">
+          <div className="timer" style={{ width: widthe + "%" }}></div>
+          <div className="score">Score : {score}</div>
 
-        <Question value={questionObj[currentIndex].question} />
+          <Question value={questionObj[currentIndex].question} />
 
-        <div className="options">
-          {questionObj[currentIndex].answers.map((choice, index) => {
-            return (
-              <Option
-                value={choice}
-                index={index}
-                clickHandler={checkAns}
-                key={currentIndex + "" + index}
-              />
-            );
-          })}
+          <div className="options">
+            {questionObj[currentIndex].answers.map((choice, index) => {
+              return (
+                <Option
+                  value={choice}
+                  index={index}
+                  clickHandler={checkAns}
+                  key={currentIndex + "" + index}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 }
 
