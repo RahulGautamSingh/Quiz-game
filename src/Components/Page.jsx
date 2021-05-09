@@ -27,7 +27,7 @@ function Page(props) {
 
     setUserData(userDataCopy);
     // console.log(userData)
-   
+
     if (currentIndex < questionObj.length - 1) {
       setTimeout(() => setWidthe(100), 500);
       setTimeout(() => setCurrentIndex(currentIndex + 1), 500);
@@ -114,11 +114,12 @@ function Page(props) {
       //     2000
       //   );}
 
-     
       if (widthe === 0) {
+          // eslint-disable-next-line
         userDataCopy = JSON.parse(JSON.stringify(userData));
 
         userDataCopy.push([
+         
           questionObj[currentIndex].question,
           questionObj[currentIndex].correctOption,
           null,
@@ -127,11 +128,13 @@ function Page(props) {
           ],
           "not answered",
         ]);
-  
+       
+
         setUserData(userDataCopy);
         if (currentIndex === 4) {
           setTimeout(
-            () => history.push({ pathname: "/result", state: { userDataCopy } }),
+            () =>
+              history.push({ pathname: "/result", state: { userDataCopy } }),
             2000
           );
         } else {
