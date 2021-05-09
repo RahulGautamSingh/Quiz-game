@@ -21,7 +21,12 @@ export default function Result(props) {
               <td>{elem[3]}</td>
               <td
                 style={{
-                  backgroundColor: elem[2] ===null ? "transparent":elem[1]===elem[2]?"green" : "red",
+                  backgroundColor:
+                    elem[2] === null
+                      ? "transparent"
+                      : elem[1] === elem[2]
+                      ? "green"
+                      : "red",
                 }}
               >
                 {elem[4]}

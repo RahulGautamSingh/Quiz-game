@@ -63,8 +63,8 @@ table {
 }
 
 .timer {
-    background-color: green;
-   
+
+
     height: 30px;
     display: flex;
     justify-self: left;

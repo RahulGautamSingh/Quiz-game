@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 function Page(props) {
+  let intervalId;
   let [score, setScore] = useState(0);
   let [currentIndex, setCurrentIndex] = useState(0);
   let [widthe, setWidthe] = useState(100);
@@ -13,6 +14,7 @@ function Page(props) {
   let userDataCopy;
 
   function checkAns(index) {
+    clearInterval(intervalId);
     userDataCopy = JSON.parse(JSON.stringify(userData));
 
     userDataCopy.push([
@@ -108,18 +110,11 @@ function Page(props) {
 
   useEffect(
     () => {
-      // {   if(currentIndex===questionObj.length-2){
-      //   setTimeout(
-      //     () => history.push({ pathname: "/result", state: { userDataCopy } }),
-      //     2000
-      //   );}
-
-      if (widthe === 0) {
-          // eslint-disable-next-line
+      if (widthe<=0) {
+        // eslint-disable-next-line
         userDataCopy = JSON.parse(JSON.stringify(userData));
 
         userDataCopy.push([
-         
           questionObj[currentIndex].question,
           questionObj[currentIndex].correctOption,
           null,
@@ -128,10 +123,11 @@ function Page(props) {
           ],
           "not answered",
         ]);
-       
 
         setUserData(userDataCopy);
-        if (currentIndex === 4) {
+
+
+        if (currentIndex === questionObj.length - 1) {
           setTimeout(
             () =>
               history.push({ pathname: "/result", state: { userDataCopy } }),
@@ -139,14 +135,17 @@ function Page(props) {
           );
         } else {
           setCurrentIndex(currentIndex + 1);
-          console.log("after" + currentIndex);
+         
 
           setWidthe(100);
           return;
         }
       }
-      let timerInterval = setInterval(() => setWidthe(widthe - 1), 40);
-      return () => clearInterval(timerInterval);
+
+// eslint-disable-next-line
+      intervalId = setInterval(() => setWidthe(widthe - 0.1), 20);
+  
+      return () => clearInterval(intervalId);
     },
 
     // eslint-disable-next-line
@@ -157,7 +156,8 @@ function Page(props) {
     currentIndex >= 0 && (
       <>
         <div className="container">
-          <div className="timer" style={{ width: widthe + "%" }}></div>
+          <div className="timer" style={{ width: widthe + "%",backgroundColor:widthe>70?"green":widthe>30?"orange":"red" }}></div>
+          
           <div className="score">Score : {score}</div>
 
           <Question value={questionObj[currentIndex].question} />
