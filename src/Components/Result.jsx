@@ -98,7 +98,7 @@ export default function Result(props) {
     width: "10px",
     height: "10px",
     perspective: "500px",
-    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+    colors: [mypara.score>3?"green":"red"]
   };
   useEffect(() => {
     setTimeout(() => {setLoading(false);setVari(true)}, 1500);
