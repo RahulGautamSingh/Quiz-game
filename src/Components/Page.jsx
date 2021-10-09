@@ -88,7 +88,7 @@ function Page() {
         setUserData(userDataCopy);
 
         if (currentIndex === questionObj.length - 1) {
-          history.push({ pathname: "/result", state: { userDataCopy } });
+          history.push({ pathname: "/result", state: { userDataCopy, score: score } });
         } else {
           setCurrentIndex(currentIndex + 1);
 
